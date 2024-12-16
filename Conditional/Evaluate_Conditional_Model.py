@@ -2,7 +2,7 @@ import torch
 from torchvision import datasets, transforms
 import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
-import trainUNETcon as train
+import Train_Conditional_Model as train
 
 
 def b_t(t, beta_min=0.1, beta_max=20.0):
