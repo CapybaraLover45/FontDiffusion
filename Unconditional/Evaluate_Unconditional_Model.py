@@ -27,8 +27,6 @@ def sample(score_net, x_T, timesteps, device):
         # Euler-Maruyama update rule
         dt_tensor = torch.tensor(dt, dtype=x.dtype, device=x.device)
         x = x + (0.5 * beta_t * x + beta_t * score) * dt_tensor  # Subtract noise guided by score
-
-        # Add a small amount of noise based on the diffusion schedule
         x = x + torch.sqrt(beta_t * dt_tensor) * noise
 
     return x
@@ -46,7 +44,7 @@ def evaluate():
 
     timesteps = 2000
     # Generate samples
-    with torch.no_grad():  # No gradients needed for sampling
+    with torch.no_grad(): 
         sampled_images = sample(score_net, x_T, timesteps, device=device)
 
 
@@ -56,7 +54,6 @@ def evaluate():
         plt.imshow(sampled_images[i].cpu().squeeze(), cmap="gray")
         plt.axis("off")
     plt.show()
-
 
 
 if __name__ == "__main__":
