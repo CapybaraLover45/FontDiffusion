@@ -57,15 +57,15 @@ def evaluate():
     
     # Generate a batch of labels (e.g., 0 to 9 for MNIST)
     batch_size = 16
-    specific_digit = 9  # The specific digit you want to generate
-    labels = torch.full((batch_size,), specific_digit).to(device)  # All labels set to '5'
+    specific_digit = 9
+    labels = torch.full((batch_size,), specific_digit).to(device)  
 
     # Start with pure noise at t = T
     x_T = torch.randn(batch_size, 1, 28, 28).to(device)
     
     timesteps = 2000
     # Generate samples
-    with torch.no_grad():  # No gradients needed for sampling
+    with torch.no_grad():  
         sampled_images = sample(score_net, x_T, timesteps, labels, device=device, snr=0.1, corrector_steps=1)
 
     # Plot the samples
