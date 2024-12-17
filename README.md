@@ -11,9 +11,9 @@ Which has the corresponding solution, which we use to add noise to clean data po
 
 $$x_t=\exp\bigr[{-\frac{1}{2}\int_0^t\beta(s)ds}\bigl]x_0+\sqrt{1-\exp\bigr[{-\int_0^t\beta(s)ds}\bigl]}\space z \quad z \sim \mathcal{N}(0,I)$$
 
-We use a nueral network to estimate the score using the equality
+We use a neural network $$s_\theta(x,t)$$ to estimate the score using the equality
 
-$$\nabla_x \log p(x_t) = \mathbb{E}_{p(x_0|x_t)}\bigl[\nabla_x\log p(x_t|x_0)\bigr]$$
+$$\nabla_x \log p(x_t) = \mathbb{E}_{p(x_0|x_t)}\bigl[\nabla_x\log p(x_t|x_0)\bigr] \approx s_\theta(x,t)$$
 
 The conditional probability can be directly calculated from the solution to the SDE, resulting in the objective function
 
