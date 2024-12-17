@@ -133,14 +133,12 @@ class ScoreNet(nn.Module):
 
         # Process labels through embedding (MNIST labels)
         label_embed = self.label_embed(labels)  # Embed categorical labels
-        label_embed = label_embed.view(label_embed.size(0), 128, 1, 1)  # Reshape to match spatial dimensions
+        label_embed = label_embed.view(label_embed.size(0), 128, 1, 1)  
         label_embed = F.interpolate(label_embed, size=(x.size(2), x.size(3)), mode='bilinear', align_corners=False)
 
-        # Concatenate x, label_embed, and scaled_t_embed along the channel dimension
         # Input image x has channels, label_embed has 128 channels, and scaled_t_embed has 128 channels
         x = torch.cat([x, label_embed, scaled_t_embed], dim=1)
 
-        # Ensure the concatenation leads to a tensor with the expected channel size for the first convolution
         return self.unet(x, t_embed)
 
 
@@ -177,11 +175,9 @@ def dsm_loss(score_net, x, t, labels, device):
 
 # Training loop
 def train(score_net, dataloader, optimizer, device, num_epochs=200, patience=10):
-    score_net.train()  # Set the network to training mode
-
+    score_net.train() 
     best_loss = float('inf')  # Initialize the best loss to infinity
-    epochs_without_improvement = 0  # Track how many epochs without improvement
-
+    epochs_without_improvement = 0  
     for epoch in range(num_epochs):
         total_loss = 0.0
         loop = tqdm(dataloader, desc=f"Epoch {epoch+1}/{num_epochs}")
@@ -189,7 +185,7 @@ def train(score_net, dataloader, optimizer, device, num_epochs=200, patience=10)
         for x, labels in loop:
             x, labels = x.to(device), labels.to(device)  # Move inputs and labels to device
             epsilon = 3e-2
-            t = torch.rand(x.size(0), device=device) * (1 - epsilon) + epsilon  # Time steps
+            t = torch.rand(x.size(0), device=device) * (1 - epsilon) + epsilon  # time domain
             
             # Pass images and labels through the network
             optimizer.zero_grad()
@@ -202,14 +198,13 @@ def train(score_net, dataloader, optimizer, device, num_epochs=200, patience=10)
             # Update progress bar with the current loss
             loop.set_postfix(loss=loss.item())
 
-        # Print the average loss for this epoch
         avg_loss = total_loss / len(dataloader)
         print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {avg_loss:.4f}")
 
         # Check if the loss has improved
         if avg_loss < best_loss:
             best_loss = avg_loss
-            epochs_without_improvement = 0  # Reset counter if loss improved
+            epochs_without_improvement = 0 
         else:
             epochs_without_improvement += 1
 
@@ -221,7 +216,6 @@ def train(score_net, dataloader, optimizer, device, num_epochs=200, patience=10)
 
 # Main script
 def main():
-    # Set up device, data, and model
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
     dataset = datasets.MNIST(root="../../data", train=True, download=True, transform=transform)
