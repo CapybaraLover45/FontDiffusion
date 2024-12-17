@@ -122,10 +122,7 @@ class ScoreNet(nn.Module):
         t_embed = t_embed.view(t.size(0), 128, 1, 1)  # Reshape to (B, 128, 1, 1)
         t_embed = F.interpolate(t_embed, size=(x.size(2), x.size(3)), mode='bilinear', align_corners=False)
 
-# Scale the time embedding
         scaled_t_embed = scale.view(-1, 1, 1, 1) * t_embed
-
-# Concatenate input with scaled time embedding
         x = torch.cat([x, scaled_t_embed], dim=1)
 
         return self.unet(x, t_embed)
@@ -154,10 +151,9 @@ def dsm_loss(score_net, x, t, device):
 
 # Training loop
 def train(score_net, dataloader, optimizer, device, num_epochs=200, patience=10):
-    score_net.train()  # Set the network to training mode
-
+    score_net.train() 
     best_loss = float('inf')  # Initialize the best loss to infinity
-    epochs_without_improvement = 0  # Track how many epochs without improvement
+    epochs_without_improvement = 0  
     
     for epoch in range(num_epochs):
         total_loss = 0.0
@@ -178,25 +174,18 @@ def train(score_net, dataloader, optimizer, device, num_epochs=200, patience=10)
         # Print the average loss for this epoch
         avg_loss = total_loss / len(dataloader)
         print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {avg_loss:.4f}")
-        
 
-
-
-        # Check if the loss has improved
         if avg_loss < best_loss:
             best_loss = avg_loss
-            epochs_without_improvement = 0  # Reset counter if loss improved
+            epochs_without_improvement = 0  
         else:
             epochs_without_improvement += 1
-
-        # If the loss hasn't improved for 'patience' epochs, stop training
         if epochs_without_improvement >= patience:
             print(f"Early stopping triggered at epoch {epoch + 1}")
             break
 
 # Main script
 def main():
-    # Set up device, data, and model
     device = torch.device("cuda")
     transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
     dataset = datasets.MNIST(root="../../data", train=True, download=True, transform=transform)
