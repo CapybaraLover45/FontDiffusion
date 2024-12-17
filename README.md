@@ -18,6 +18,6 @@ $$\nabla_x \log p(x_t) = \mathbb{E}_{p(x_0|x_t)}\bigl[\nabla_x\log p(x_t|x_0)\bi
 The conditional probability can be directly calculated from the solution to the SDE, resulting in the objective function
 
 ```math
-\arg\min_\theta \mathbb{E}_{x_0 \sim p_{data}}\mathbb{E}_{p(x_0|x_t))}\bigl[\frac{1}{2}\| s_\theta(x,t)-\bigl( \nabla_x \log p(x_t|x_0)\bigr) \|^2\bigr] = \arg\min_\theta \mathbb{E}_{x_0 \sim p_{data}}\mathbb{E}_{p(x_0|x_t)}\bigl[\frac{1}{2}\| s_\theta(x,t)-\bigl( -\frac{z}{\sqrt{1-\exp\bigr[{-\int_0^t\beta(s)ds}\bigl]}}\bigr) \|^2\bigr]
+\arg\min_\theta \mathbb{E}_{x_0 \sim p_{data}}\mathbb{E}_{p(x_0|x_t))}\bigl[\frac{1}{2}\| s_\theta(x,t)-\bigl( \nabla_x \log p(x_t|x_0)\bigr) \|^2\bigr] = \arg\min_\theta \mathbb{E}_{x_0 \sim p_{data}}\mathbb{E}_{p(x_0|x_t)}\bigl[\frac{1}{2}\| s_\theta(x,t)-\biggl( -\frac{z}{\sqrt{1-\exp\bigr[{-\int_0^t\beta(s)ds}\bigl]}}\biggr) \|^2\bigr]
 ```
 
