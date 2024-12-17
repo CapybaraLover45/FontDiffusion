@@ -11,7 +11,7 @@ Which has the corresponding solution, which we use to add noise to clean data po
 
 $$x_t=\exp\bigr[{-\frac{1}{2}\int_0^t\beta(s)ds}\bigl]x_0+\sqrt{1-\exp\bigr[{-\int_0^t\beta(s)ds}\bigl]}\space z \quad z \sim \mathcal{N}(0,I)$$
 
-We estimate the score using the equality
+We use a nueral network to estimate the score using the equality
 
 $$\nabla_x \log p(x_t) = \mathbb{E}_{p(x_0|x_t)}\bigl[\nabla_x\log p(x_t|x_0)\bigr]$$
 
@@ -24,3 +24,9 @@ The conditional probability can be directly calculated from the solution to the 
  \arg\min_\theta \mathbb{E}_{x_0 \sim p_{data}}\mathbb{E}_{p(x_0|x_t)}\bigl[\frac{1}{2}\| s_\theta(x,t)-\biggl( -\frac{z}{\sqrt{1-\exp\bigr[{-\int_0^t\beta(s)ds}\bigl]}}\biggr) \|^2\bigr]
 ```
 
+Then we can sample using the discretized reverse stochastic differential equation
+
+```math
+dx = \bigl[ -\frac{1}{2}\beta(t)x-\beta(t)s_\theta(x,t)\bigr](-\Delta t) + \sqrt{\beta(t)\Delta t}\xi \quad \xi \sim \mathcal{N}(0,I)
+
+```
