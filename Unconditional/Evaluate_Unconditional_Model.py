@@ -36,9 +36,9 @@ def evaluate():
     # Load device and model
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     score_net = train.ScoreNet().to(device)
-    score_net.load_state_dict(torch.load("scorenet.pth", map_location=device, weights_only=True))
+    score_net.load_state_dict(torch.load("UnconditionalScorenet.pth", map_location=device, weights_only=True))
     score_net.eval()
-    print("Model loaded from scorenet.pth")
+    print("Model loaded from UnconditionalScorenet.pth")
     x_T = torch.randn(16, 1, 28, 28)  # Batch of 1 noise samples (e.g., MNIST size 28x28)
     
 
