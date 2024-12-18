@@ -27,6 +27,6 @@ The conditional probability can be directly calculated from the solution to the 
 Then we can sample using the discretized reverse stochastic differential equation
 
 ```math
-dx = \bigl[ -\frac{1}{2}\beta(t)x-\beta(t)s_\theta(x,t)\bigr](-\Delta t) + \sqrt{\beta(t)\Delta t}\xi \quad \xi \sim \mathcal{N}(0,I)
+x_{t-\Delta t}-x_{t} = \bigl[ -\frac{1}{2}\beta(t)x-\beta(t)s_\theta(x,t)\bigr](-\Delta t) + \sqrt{\beta(t)\Delta t}\xi \quad \xi \sim \mathcal{N}(0,I)
 
 ```
