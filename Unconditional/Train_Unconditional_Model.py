@@ -198,8 +198,8 @@ def main():
     # Train the model
     train(score_net, dataloader, optimizer, device)
     # Save the model after training
-    torch.save(score_net.state_dict(), "scorenet.pth")
-    print("Model saved to scorenet.pth")
+    torch.save(score_net.state_dict(), "UnconditionalScorenet.pth")
+    print("Model saved to UnconditionalScorenet.pth")
 
 
 
