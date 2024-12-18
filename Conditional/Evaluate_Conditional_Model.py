@@ -51,9 +51,9 @@ def evaluate():
     # Load device and model
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     score_net = train.ScoreNet().to(device)
-    score_net.load_state_dict(torch.load("scorenet.pth", map_location=device, weights_only=True))
+    score_net.load_state_dict(torch.load("ConditionalScorenet.pth", map_location=device, weights_only=True))
     score_net.eval()
-    print("Model loaded from scorenet.pth")
+    print("Model loaded from ConditionalScorenet.pth")
     
     # Generate a batch of labels (e.g., 0 to 9 for MNIST)
     batch_size = 16
