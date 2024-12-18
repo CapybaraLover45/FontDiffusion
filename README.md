@@ -1,6 +1,6 @@
 Generating digits from the MNIST dataset through stochastic differential equations.
 
-This specific implementation uses the forward stochastic differential equation
+This specific implementation uses the forward stochastic differential equation (DDPM)
 
 
 $$dx =-\frac{1}{2}\beta(t)\textbf{x}dt+\sqrt{\beta(t)}d\textbf{W} \quad t\in[0,1]$$
